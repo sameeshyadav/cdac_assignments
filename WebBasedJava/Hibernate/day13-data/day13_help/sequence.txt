@@ -1,0 +1,231 @@
+Revise
+Why Spring 
+Simplifies Java programming
+Reduces boiler plate code
+ready made imple of std pattern(MVC,Proxy,singleton,factory,ORM...)
+Integration master
+Loose coupling between dependents n dependencies : Spring Core container n AOP
+
+What is it ?
+Container
+Manages life cycle of spring beans
+Framework
+Extensive n modular imple of patterns
+
+
+What is IoC? : Inversion of control
+s/w style of prgramming
+
+Conventional prog : Dependent objs managing (creating) dependencies
+(eg : Java Bean --- DAO , In JB 's constr : DAO instance)
+Nature of dependency changes : dependent obj gets affected
+Inversion of control
+Instead of dependent objs managing their dependencies : Spring container manages the same
+
+D.I : Dependency injection => loose coupling
+Easier maintence n debugging, easy extensibility.
+
+
+Spring bean life cycle
+
+Modes of wiring
+
+Today's Topcis
+Complete Auto wiring
+Annotations based programming
+MVC
+------------------------
+Spring bean life cycle
+refer to : spring-beans-life-cycle.png
+
+Types of wiring 
+refer to : spring wiring.png
+
+Automatic wiring
+wiring = injecting dependecies into dependent objects
+auto wiring means ---- bean definition in xml need not contain property tag or construcutor arg tag. This can be resolved auto by container.
+
+Types of auto wiring 
+autowire="byName"----SC tries to match bean property by name. In dependent bean class , u must have matching setter & in xml config file -- MUST have --bean id with the matched name.
+
+auto-wired="byType" --- SC tries match bean property by type of the property --- if it comes across multiple beans of the same type ---NoUniqueBean exception is raised.
+eg --- In dependent --- ATMImpl
+private Transport myTransport;---- setter
+Transport imple --- test,soap,http
+
+auto-wired=constructor --- 
+same as autowire=byType (only matching will be done on constr arguments)
+---------------------------
+Hybrid approach(Reduced xml, reduced java code + majority annotations)
+
+Steps in Spring programming using annotations
+
+0. To enable annotation support -- add context namespace & add the following
+<context:annotation-config/> --- To tell SC --to enable annotation support(eg --- AutoWired,PostConstruct,Predestroy,.....)
+
+0.5 --- How to specify location(base pkg) of spring beans to SC?
+<context:component-scan base-package="comma sep list of pkgs"/>---
+SC starts searching(scanning)  in specified pkgs (including sub-pkgs) ---for classes anno with stereotype anno --- @Component,@Service,@Repository,@Controller,@RestController,@ControllerAdvice...
+
+
+Basic class level annotations meant for  SC
+Super type 
+@Component --- spring bean class
+sub - type annotations
+@Controller --- In Web MVC scenario -- for request handling.
+@Service --- Service layer (B.L) + transaction management
+@Repository --- DAO layer
+@RestController -- RESTful service provider
+
+
+
+1. @Component --- <bean id , class> --- SC interprets it & starts bean life-cycle.
+eg --- 
+package beans;
+@Component("abc")
+public class MyBean {...}
+xml --- <bean id="abc" class="beans.MyBean"/>
+OR
+@Component
+public class MyBean {...}
+xml --- <bean id="myBean" class="beans.MyBean"/>
+
+2. @Controller -- spring web mvc controller
+3. @Repository --- DAO layer class
+4. @Service --- for service layer beans --- transactions.
+5. @Scope(value="singleton|prototype|request|session")--- class level annotaion --- in xml via scope attribute.
+6. @Lazy(true|false) ----class level anno -- lazy-init attribute
+7. @PostConstruct ---method level anno - init-method ---method level
+8. @PreDestroy ---method level anno-- destroy-method --- method level
+9. @Required(true|false) --- setter method or paramed constr or field level ---tells SC if depenency is mandatory or optional-- def=true
+10. @AutoWired ---setter method or paramed constr or field level 
+eg --- TestTransport implements Transport {...}
+ auto-wired="byType"
+eg  -- field level annotation ---in ATMImpl bean (dependent)
+@AutoWired //autowire=byType , mandatory by default (required=true)
+private Transport myTransport;
+Meaning -- no parameterised constr, no setter , no xml containing bean definition is required.
+SC --- chks for any bean of Transport by type & injects it in ATMImpl
+What if : SC comes across multiple matches : SC throws NoUniqueBeanDefinitionException
+What if : SC doesn't find even a single match : SC throws UnSatisfiedDependencyException
+
+11. @AutoWired//(required=true)
+@Qualifier("test")
+private Transport myTransport; ---- autowire="byName"
+---spring supplied anno.
+SC searches for a bean with id="test" 
+Match found : NO excs , field level D.I
+Match not found : SC throws exception (UnSatisfiedDependencyException : NoBeanDefFoundExc)
+
+
+OR
+@Resource(name="soap")
+private Transport myTransport; ---- autowire="byName"
+
+--J2EE supplied via javax.annotation
+
+
+SpEL --- spring expression language
+dynamic expression languge ---spring(3.x) supplied -- to evaluate expressions dynamically.
+#{SpEL expression} --- similar to  JSP EL --- SpEL allows --- getters,setters,constr invocation, static & non-static method invocations.
+------------------------------------
+What is MVC ?
+Model-View-Controller --Standard design pattern , meant for separation of concerns(=tasks=responsibilities)
+
+Model -- Java Bean (conversational state holder + B.L supplier) & POJOs
+
+View layer --JSP , Thymeleaf/velocity/Angular/React/Vue
+Represents UI / presentation logic  (processing requests & generating response)
+
+Controller -- Typically a servlet(used in Spring MVC ) or a filter(used in Struts 2 framework)
+Manages navigation & beans.
+
+Front Controller -- A design pattern -- which ensures ANY request coming from ANY client , for this web app , will be intercepted by a common gate keeper(or a centralized dispatcher)
+It will dispatch clnt request to further components , based upon nature of the req.
+
+MVC flow (without spring)
+
+refer : MVC diagrams , MVC Details
+mvc-overview.png
+
+ 
+Implementation using servlet / JSP & JavaBean  --Shared as a readymade demo.
+Refer to : eclipse projects\mvc_hibernate
+Flow  diagram : mvc-flow.png
+
+Before entering spring-mvc 
+
+For  comparison of layers between JSP--JB--DAO --POJO --DB Vs Spring MVC layers.
+refer : comparioson of layers JSP-JB vs Spring MVC.png
+
+
+Enter Spring MVC --concept & implementation steps
+Refer to : "lab sequence for spring mvc.txt"
+----------------------
+1. Test Spring MVC flow.
+(refer to lab sequence)
+
+2. What is a model attribute?
+It's the attribute(server side entry=k n value pair) 
+Purpose : to store the results of B.L
+Who creates  --- Controller
+Who sends it to whom : Controller ---> D.S
+After D.S gets actual view name from V.R : 
+D.S chks : are there any model attrs : 
+Yes : D.S saves model attrs under Request scope & then forwards the clnt to view layer .
+NO : D.S forwards the clnt to view layer .
+How to access these model attrs from JSP ?
+${requestScope.attrName}
+
+What are different ways for Controller to add model attrs ?
+1. Via  is o.s.w.s.ModelAndView?
+
+o.s.w.s.ModelAndView : class => holder for model attrs + logical view name
+
+ModelAndView(String viewName,String modelAttrName,Object modelAttrVal)
+eg : what can be valid ret type of req handling method
+String  OR ModelAndView
+
+
+2. Simpler way ?
+
+Use  o.s.ui.Model : i/f ---holder (Map) of model attributes
+How do u add model attributes ?
+public Model addAttribute(String modelAttrName,Object modelAttrVal)
+eg : How to add 2 model attrs?
+
+	
+Who will supply empty Model map ?  : SC
+IoC : DI
+How to tell SC that u need a model map ? : add it as the arg of req handling method
+When controller rets string : logical view name (controller impl. rets all model map)
+
+
+
+3. How to hide index.jsp under WEB-INF (i.e how to ensure that index page is served to client via D.S)
+Add HomeController to serve index.jsp
+
+
+4. Handling request parameters in Controller ?
+eg : @RequestParam("price") double productPrice
+SC : double productPrice =Double.parseDouble(request.getParameter("price"))
+Reco : Match req param names with method arg names.
+URL : http://localhost:8080/day13.1/test/product?nm=pen&qty=10&price=40.5&manuDate=2020-1-1
+SC : def date time format : mon/day/year
+Problem : HTTP 400 : Bad request => some request data coming from client is invalid
+Def dat format : mon/day/yr
+How to tell SC : about exact Date time format : annotation.
+
+
+5. What's the meaning of HTTP status 400 : Bad Client Error
+Typically it represents some request parameter conversion error.
+
+Default date format used by SC : MM/dd/yyyy
+In order to change it use : @DateTimeFormat annotation.
+
+
+eg : @RequestParam("exp_date") @DateTimeFormat(pattern="yyyy-MM-dd")  Date expDate
+SC invokes : SimpleDateFormat sdf=new SDF("yyyy-MM-dd");
+Date expDate=sdf.parse(request.getParameter("exp_date"));
+
+6. Integrate it with Hibernate
