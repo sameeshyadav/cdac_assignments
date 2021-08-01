@@ -1,0 +1,7 @@
+1. Please go through
+day14-data\day14_help\spring boot\regarding spring boot.txt
+
+2. Extract "demo.zip"
+import it as "Existing Maven Project" , in your work space
+It will start downloading spring boot related dependencies ,will take longer time.
+So keep it ready for tomorrow.

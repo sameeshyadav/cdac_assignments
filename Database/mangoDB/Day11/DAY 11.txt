@@ -1,0 +1,551 @@
+
+								DAY 11 
+								MONGO DB
+								
+	================================================================
+	
+	MONGO DB : 
+			
+			WHICH WORKS ON DOCUMENT 
+				DOCUMENT ORIENTED DATABASE
+					HIGH PERFORMANCE , HIGH AVAILABLITY 
+						HIGH SCALABILITY 
+			
+			DATABASE : 
+				PHYSICAL MACHINE / CONTAINER 
+				
+			COLLECTION : 
+				COLLECTION IS THE GROUP OF DOCUMENTS. COLLECTIONS IS EQUIVALENT TO AN RDBMS TABLES....
+				
+				EMPLOYEES TABLE - EMPLOYEE COLLECTION 
+				DEPARTMENT TABLE - DEPARTMENT COLLECTION 
+				
+				----
+				
+					EMPLOYEE COLLECTION : 
+									CONTAINS ALL INFORMATION TOGEATHER 
+										EMPLOYEE DETAILS 
+										DEPARTMENT DETAIL 
+										COUNTRY 
+										REGION
+										LOCATION 
+										CITY 
+										
+				SINGLE FILE : 
+							DOCUMENT IN MONGODB 
+							
+						
+						
+				DOCUMENT  : 
+
+						SET OF KEY VALUE 
+						EVERY DOCUMENT MAY HAVE DIFFERENT SCHEMA 
+
+
+				DOCUMENT 1 : 
+							ID 
+							NAME
+							SALARY 
+							
+				DOCUMENT 2 : 
+							ID 
+							NAME 
+							SALARY 
+							AGE
+							HIREDATE 
+				DOCUEMNT 3 :
+							HIREDATE 
+							NAME 
+							AGE 
+							ADDRESS 
+							
+							
+		COMPARION WITH RDBMS : 
+
+		RDBMS 									MONGODB 
+		
+		DATABASE 								DATABASE 
+		TABLES									COLLECTIONS 
+		ROWS 									DOCUMENTS 
+		COLUMNS 								FILEDS / KEY 
+		JOIN 									ENBEDDED DOCUMENTS 
+		
+		
+		MONGODB STORE DATA 
+				IN THE DOCUMENT FORMAT 
+					AND EACH DOCUMENT IS FOLLOW JSON FORMAT 
+					
+				JSON  :  
+					WAY OR STRUCTURE WHICH STORE INFORMATION IN KEY VALUE PAIR 
+					
+	Empid 101	{
+						_ID : ObjectId(3453453454345) -- unique, primary key 
+							for faster retrival 
+								index automatically on these ids ..
+								
+						NAME : "RAHUL BANSAL",
+						AGE  : 35
+						SALARY : 3454045
+						ADDRESS : 
+							{
+							HNO : 103,
+							STREET : "CHANDAN NAGAR",
+							CITY : "PUNE",
+							STATE : "MH",
+							ZIPCODE : 11014								
+							}			
+					}
+	--- de-normalization of the data 			
+					
+
+		facebook : 
+			rahul ---- account 232323232
+			ritesh ----account 345234433
+
+
+		***** 
+			NOSQL : 
+				CASE SENSTIVE LANGUAGE 
+						CASE SENSTIVE IN TERMS OF THE KEY WORDS 
+						DATA ALSO 
+					
+				WE ARE EXECUTING QUERIES : 
+						MAKE SURE WE ARE USING CORRECT CASE OF THE KEYWORDS
+		*** 
+			MOST OF TIME THROWS ERRORS ON THE SCREEN 
+			
+				EMPLOYEES 
+				
+				employees
+
+=======================================================================
+
+							MONGODB
+
+1) UPLOADED THE MONGODB EXE 
+2) INSTALLATION STEPS 
+
+INSTALLATION : 
+				
+			1) DOWNLOAD THE MSI FILES BASED ON OPERATING SYSTEM 
+			2) INSTALL 
+			3) MONGO INSTALLATION WILL HAPPEN IN THE C DRIVE 
+			
+			C:\Program Files\MongoDB\Server\4.2\bin
+				
+	** DEFAULT INSTALLATION WILL BE IN C DRIVE 
+		
+			BUT IT PROVIDEDS FLEXIBILITY TO STORE DATA 
+			
+			
+	** 
+		CD C:\
+		MD "\data\db"
+				
+	**
+		START YOUR MONGDB DATABASE 
+			
+			C:\Program Files\MongoDB\Server\4.2\bin
+			
+		MONGOD.EXE (WHICH ALLOWS TO OPEN THE SERVER WITH THE DEFINE LOCATION)
+		
+		
+	COMMAND TO SATRT SERVER AT PERTICULAR LOCATION : 
+	
+	1) CD C:\Program Files\MongoDB\Server\4.2\bin
+	2) mongod.exe --dbpath="F:\CDAC\cdac_assignments\Database\mangoDB\DB\data"
+	
+	server started 
+	
+	* connect to your database 
+	
+	cd C:\Program Files\MongoDB\Server\4.2\bin
+	mongo.exe 
+	
+	which will connect to the server
+	
+	> this is as similar as sql prompt 
+
+=================================================================
+
+** MONGODB IN THE NOSQL DATABASE AND LAUNCH ITS OWN QUERY LANGUAGE 
+			TO INTERACT WITH THE DATABASE 
+		
+	DATABASE  :  
+		
+		RDBMS : WE CREATE DATABASE AND TABLES 
+		
+		BY DEAFULT AFTER YOU LOGGED IN : 
+			SYSTEM POINTED USED TO THE "TEST" DATABASE 
+		
+		CREATE YOUR OWN DATABASES : 
+		
+			* TYPE A COMMAND 
+			
+				USE DATABASENAME
+				
+				AS THIS IS OPEN SOURCE AND ADVANCE TECHNOLOGY 
+				
+				COMMANDS YOU EXECUTED :
+					* FIND WEATHER THAT OBJECT EXISTS OR NOT 
+					IF EXISTS 
+						IT ALLOWS YOU TO MOVE IN 
+					IF NOT EXISTS 
+						IT AUTOMATICALLY CREATE THAT FOR YOU 
+						
+						
+		MONGODB IS OBJECT ORIENTED / DOCUMENT ORIENTED LANGUAGE
+
+			MAIN OBJECT IN MONGODB : 
+				"db" - object which allows to perform all the operation in the mongodb 
+				
+			java : public static void main()
+						first method get executed... 
+						
+			what ever commands we are going to use will be started from db only 
+
+				object.methods.variable ....
+				
+			db : main object 
+			
+			--------------------------------------------------
+			
+	BASIC COMMANDS : 
+				
+		RDBMS 							MONGODB 
+		
+		SHOW DATABASES;					SHOH DBS;
+		SHOW TABLES;					SHOW COLLECTIONS;
+		
+	***********
+		SYSTEM : IT WON'T SHOW THE DATABASE WHICH DOESN'T ANY RECORD
+			
+		---------------------------------------------------
+
+CREATE COLLECTIONS : 
+			
+			WE HAVE FOLLOW THE OBJECT 
+			
+			METHOD : createCollection 
+			
+			db.createCollection("emp");
+				
+			
+			COMPLETE MONGODB ONLY WORKS WITH JSON OBJECT 
+			
+3) CREATE A DOCUMENT IN THE DATABASE IN THE COLLECTION 
+				
+			* insert() is the primary method to insert documents into the Mongodb collection.
+			* if the collection does not exists, insert() create the collection during the 1st insert 
+			
+		
+			trying to insert data in the collection emp 
+				by mistake empp
+					- system will create a collection 
+						empp 
+					- insert a records 
+			
+	-- insert a document 
+
+			insert() -- json 
+			
+	Syntax : 
+			db.collectionname.insert({json object});
+			
+			{
+			name : "Rahul",
+			salary : 30000,
+			age : 34,
+			city : "pune"
+			}
+				
+			>
+			db.emp.insert(
+				{
+				name : "Rahul",
+				salary : 30000,
+				age : 34,
+				city : "pune"
+				}
+			);
+			
+			automaticaly system allocated _id 
+			
+			{ 
+			"_id" : ObjectId("61022e32830526560f1fa157"), -- primary key  
+			"name" : "Rahul", 
+			"salary" : 30000, 
+			"age" : 34, 
+			"city" : "pune" 
+			}
+			
+			db.empp.insert(
+				{
+				name : "Rahul",
+				salary : 30000,
+				age : 34,
+				city : "pune"
+				}
+			);
+			
+			_id : default id given to all the documents 
+			
+			_id field to the document and generate a unique objectid for the value 
+	----------------------------------------------------------
+
+System also allows to override the value : 
+
+		db.emp.insert(
+				{
+				_id : 101,
+				name : "Rahul",
+				salary : 30000,
+				age : 34,
+				city : "pune"
+				}
+			);
+			
+			{
+				"_id" : 101,  -- by default primary key for your collection
+				"name" : "Rahul",
+				"salary" : 30000,
+				"age" : 34,
+				"city" : "pune"
+			}	
+				
+		--------------
+MONGODB : 
+
+		db.emp.insert(
+				{
+				_id : 101,
+				name : "Rahul",
+				salary : 30000,
+				age : 34,
+				city : "pune"
+				}
+			);		
+				
+RDBMS : 
+		INSERT INTO EMP VALUES(101,'RAHUL',30000,34,'PUNE');
+		
+---------------------------------------------------------------------
+
+CREATE MULTIPLE DOCUMENTS 
+	* YOU CAN PERFORM A BULK INSERT INTO A COLLECTION BY PASSING AN ARRAY OF DOCUMENTS TO THE INSERT() METHOD.....
+	
+		ARRAY : []
+		
+		db.emp.insert([
+			{
+				_id : 102,
+				name : "ritesh",
+				age : 23
+			},
+			{
+				name : "sunita",
+				age : 35,
+				salary : 45000,
+				address : 
+						{
+							hno : 101,
+							street : "chandan nagar",
+							city : "pune",
+							zipcode : 411014
+						}
+			}
+		]);
+		
+	RDBMS : 
+		INSERT INTO TABLE VALUES (),();
+		
+	--------------------------------------------------------------
+
+Retrieve data from the collection : 
+			
+						Read Operations
+
+How to select 
+
+	* find() method - selects documents in a collection and return a 	
+					cursor to the selected documents 
+					
+		syntax : 
+			db.collection.find(query,projection)
+			
+		parameters of the find() method : 
+		
+			* query : only used of your wish to specify criteria.
+				
+				query : is treated as a where clause of your rdbms 
+				
+				filter the data - first parameter of the method fin()
+				
+				. It can be omitted if we wish to return all the documents in the collection..
+				
+			* projection : is used to control which fields to be returned 
+					the fields which need to be pronted can be controled by project 
+					
+					
+			Select emp_id,name from emp;
+			
+			Projection example : 
+				{field1:1,field2:0}
+				
+				1 to include : the _id field always dilpayed for the output  
+				0 to exclude 
+			
+				_id : 0
+				
+		** by default mongodb return only 20 documents in the batch 
+			type "it" 
+				
+	find() example :
+
+		* return all the documents of the collection without specifying parameters 
+		
+		db.emp.find();       ----- select * from emp;
+		
+		* Returns randomly a document in a collection without specifying parameters 
+			
+		db.emp.findOne();  select * from emp limit 1;
+		
+		* To select documents that match selection criteria 
+		eg : return all the documents from the emp collection where age = 34
+		
+		age = 34
+		
+		db.emp.find({age:34}); select * from emp where age = 34;
+		
+		* Select the document that match selection criteria and specific fields only.... 
+		
+		eg : return all documents in emp collection where age = 34 and project _id,name, salary
+		
+		select id,name,salary from emp where age = 34;
+		
+		db.emp.find(
+			{age : 34},  ------- filter criteria
+			{name:1,salary:1}  ------- proejction - which fields need to display 
+			);
+		
+		db.emp.find(
+			{age : 34},
+			{name:1,salary:1}
+			);
+		
+		do not want _id to be displayed 
+		
+		db.emp.find(
+			{age : 34},
+			{name:1,salary:1,_id:0}
+			);
+		
+	---------------------------------------------------------------
+	
+	Comparision Opertors 
+	
+	* to express equals to (eg : =) in the mongodb query language , 
+		use 
+		json {key:value}
+		
+		where first_name = 'Mozhe';
+		
+		db.employees.find({first_name:"Mozhe"});
+		
+	* != is defined as 
+		$ne : not equals too 
+		
+		syntax : 
+		
+			db.emps.find(
+				{
+				first_name : {$ne : "Mozhe"}
+				},
+				{
+				employee_id:1,first_name:1,salary:1,_id:0
+				}
+			);
+	
+	
+		select employee_id,first_name,salary from employees 
+				where first_name != 'Mozhe';
+		
+		* operators 
+			rdbms 						mongodb 
+			
+			>							$gt
+			>=							$gte 
+			<							$lt
+			<=							$lte 
+			
+		* eg : 
+			return all the document whose salary > 15000 
+			
+			
+			
+			db.emp.find(
+				{salary : {$gt : 15000}
+				}
+				);
+		* eg 
+			retuns all the document whose salary > 2000 and < 4000
+			
+			db.emp.find(
+				{salary  : 
+					{$gt : 2000,$lt : 4000}  
+				}
+				);
+				
+			--- , works or treated as a and operator 
+			
+	========================================================
+
+		just for lab :
+		
+	Need to have default database for work 
+	
+	Mongodb allows to inport data in csv or json format 
+	
+	import data in the csv format : 
+
+	mongoimport.exe --type csv -d rahulnewdatabase -c employees --headerline --drop "path of your csv file"
+	
+	
+	mongoimport.exe --type csv -d rahulnewdatabase -c employees --headerline --drop "C:\Users\Priyanka Goel\Desktop\No SQL\employees.csv"
+			
+			
+			
+		------------------------------------------------------
+
+							END FOR TODAY 
+			
+			
+			
+			
+			
+			
+			
+			
+		
+		
+		
+				
+				
+						
+
+		
+
+
+
+
+						
+										
+										
+				
+				
+				
+				
+				
+				
+				
+				
